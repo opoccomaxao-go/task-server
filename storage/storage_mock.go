@@ -11,6 +11,8 @@ type StorageMock struct {
 	Updated chan task.Task
 }
 
+var _ task.Storage = (*StorageMock)(nil)
+
 func NewMock() *StorageMock {
 	return &StorageMock{
 		First:   make(chan task.Task, 10000),
@@ -50,7 +52,7 @@ func (m *StorageMock) FirstToExecute() (*task.Task, error) {
 	}
 }
 
-func (m *StorageMock) Watch() (notificator.Extended, error) {
+func (m *StorageMock) Watch() (task.Notificator, error) {
 	return notificator.New(), nil
 }
 
